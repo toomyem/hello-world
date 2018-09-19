@@ -1,6 +1,6 @@
 FROM golang:alpine AS builder
 
-RUN apk add git
+RUN apk --update add git
 RUN mkdir -p /go/src/hello_world
 WORKDIR /go/src/hello_world
 COPY *.go .
