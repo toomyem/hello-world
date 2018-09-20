@@ -42,9 +42,8 @@ func main() {
 	fmt.Println("Starting app on port 9000")
 
 	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(mainHandler)
 	r.HandleFunc("/health", healthHandler)
-	r.HandleFunc("/index", mainHandler)
+	r.HandleFunc("/", mainHandler)
 
 	err := http.ListenAndServe("0.0.0.0:9000", r)
 	if err != nil {

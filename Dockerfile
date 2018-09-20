@@ -1,14 +1,14 @@
-FROM golang:alpine AS builder
+FROM golang:1.11-alpine3.8 AS builder
 
 RUN apk --update add git
-RUN mkdir -p /go/src/hello_world
-WORKDIR /go/src/hello_world
-COPY *.go .
-RUN go get -v && go build
+WORKDIR /src/hello_world
+COPY . .
+RUN go mod download
+RUN CGO_ENABLED=0 go build
 
-FROM alpine
-COPY --from=builder /go/src/hello_world/hello_world /hello_world
+FROM alpine:3.8
+COPY --from=builder /src/hello_world/hello-world /hello-world
 
 EXPOSE 9000
 
-CMD ["/hello_world"]
+CMD ["/hello-world"]
